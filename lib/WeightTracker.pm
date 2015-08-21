@@ -7,7 +7,11 @@ use Data::FormValidator::Constraints ':closures';
 use Data::FormValidator::Constraints::DateTime ':all';
 
 get '/' => sub {
-  template 'index';
+  if (my $user = session 'user') {
+    template 'index';
+  } else {
+    template 'login';
+  }
 };
 
 get '/register' => sub {
@@ -56,6 +60,27 @@ post '/register' => sub {
     template 'register',
       { errors => { map { $_ => 1 } $results->missing, $results->invalid }, };
   }
+};
+
+get '/login' => sub {
+  template 'login';
+};
+
+post '/login' => sub {
+  my $email = params->{email};
+  if ($email and my $user = resultset('User')->find({ email => $email })) {
+    if ($user->verify_password(params->{password})) {
+      session user => $user;
+      redirect '/';
+    }
+  }
+
+  template 'login', { error => 1 };
+};
+
+get '/logout' => sub {
+  session user => undef;
+  redirect '/';
 };
 
 1;

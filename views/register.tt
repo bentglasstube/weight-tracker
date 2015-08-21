@@ -29,7 +29,9 @@
   </div>
   [% input('height', 'Height', 'text', '5&prime;8&Prime;') %]
   [% input('birth_date', 'Date of Birth', 'date') %]
-  [% input('weight_goal', 'Goal Weight', 'number') %]
+  [% input('weight_goal', 'Weight Goal', 'number') %]
 
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+<p>Already registered? <a href="/login">Log in</a>.</p>
