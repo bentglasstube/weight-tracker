@@ -1,0 +1,15 @@
+appname: WeightTracker
+layout: main
+charset: UTF-8
+template: template_toolkit
+logger: console
+log: core
+warnings: 1
+show_errors: 1
+startup_info: 1
+
+plugins:
+  DBIC:
+    default:
+      dsn: dbi.Pg
+      schema_class: WeightTracker::Schema
